@@ -1,0 +1,35 @@
+# Primary purpose of node affinity is to ensure that pods are hosted on particular nodes
+# kubectl label nodes node01 color=blue
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue
+  labels:
+   app: myapp
+   type: frontend
+spec:
+  template:
+    metadata:
+     name: myapp-pod
+     labels:
+      app: myapp
+    spec:
+     containers:
+      - name: nginx-containes
+        image: nginx
+     affinity:
+         nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+           nodeSelectorTerms:
+            - matchExpressions:
+              - key: color
+                operator: In
+                values:
+                 - blue
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+
+
