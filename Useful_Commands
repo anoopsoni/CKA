@@ -1,0 +1,39 @@
+kubectl get pods                      # To get the list of pods
+kubectl get nodes                     # To get the list of nodes
+kubectl get pods -o wide              # To get detailed information about pods
+kubectl get pods --show-labels        # Labels information
+kubectl get pods -n <namespaces>      # To get pods in particular namespace
+kubectl get pods --all-namespaces     # To get pod information in all namespaces
+kubectl get all                       # To get all the objects
+kubectl create -f <yaml-file-name>    # To create the kubernetes object
+kubectl get pods -l app=my-app        # To get the pods details for particular labels
+kubectl describe pods < pod name >    # To get all information related to pod
+kubectl cluster-info
+kubectl delete pods < pod name>
+
+
+# Deployment commands
+=======================
+
+kubectl create -f deployment-definition.yml --record
+kubectl rollout status deployment <deployment name>
+kubectl rollout history deployment < deployment name>
+kubectl rollout undo deployment < deployment name>
+
+#Imparative commands
+=======================
+
+kubectl run nginx --image=nginx                                     # pod creation
+kubectl create deployment my-deployment --image=nginx               # deployment creation "my-deployment"
+kubectl create deployment my-deployment --image-nginx --replicas=5
+kubectl expose deployment my-deployment --port 80                   # expose the deployment and create service
+kubectl scale deployment my-deployment --replicas=5
+kubectl edit deployment my-deployment
+kubectl set image deployment my-deployment nginx=nginx:1.18
+
+kubectl run nginx --image=nginx --dry-run=client -o yaml > pod.yml  # It will create the yaml file for pod
+kubectl run redis --image-redis:alpine -l tier=db                   # create redis pod with labels tier=db
+
+# To create a service and expose the pod on 6379 port
+kubectl expose pod redis --name redis-service --port 6379 --target-port 6379
+
