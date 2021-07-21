@@ -1,0 +1,19 @@
+# Taint allow a node to repel a set of pod which are not tolerate to the applied taint
+# Taint are applied on nodes and toleration applied to pods
+# kubectl taint nodes <node name> key=value:effect , Effect would be NoSchedule, PreferNoSchedule and NoExecute
+# kubectl taint nodes node01 color=blue:NoSchedule
+# if we want to place a pod on node01 then we have to add toleration on pod
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+  tolerations:
+    - key: color
+      operator: "Equal"
+      value: blue
+      effect: NoSchedule
