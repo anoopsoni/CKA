@@ -1,0 +1,15 @@
+# Pod definition file for manual schedule a pod on a specific node based on Node labels
+# kubectl label node worker-node1 env=production
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+  nodeSelector:
+    env: production

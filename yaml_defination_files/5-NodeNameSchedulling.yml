@@ -1,0 +1,14 @@
+# Pod definition file for manual scheduling the pod on specific worker node.
+# nodeName parameter is defined under spec section.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: my-app
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+  nodeName: worker-node1
