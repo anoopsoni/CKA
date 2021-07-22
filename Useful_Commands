@@ -65,7 +65,10 @@ ETCDCTL_API=3 etcdctl snapshot restore /opt/snapshot-pre-boot.db --data-dir /var
 
 # Change the data-dir in /etc/kubernetes/manifests/etcd.yml file
 
+#ConfigMap and Secrets
 
+kubectl create configmap my-conf --from-literal=APP_COLOR=blue
+kubectl create configmap my-conf --from-file=<path to file>
 
 
 
