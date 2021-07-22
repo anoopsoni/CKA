@@ -37,3 +37,35 @@ kubectl run redis --image-redis:alpine -l tier=db                   # create red
 # To create a service and expose the pod on 6379 port
 kubectl expose pod redis --name redis-service --port 6379 --target-port 6379
 
+# Monitoring and Maintenance
+==============================
+kubectl logs < pod name >
+kubectl logs -f < pod name >
+kubectl logs -f < pod name > < container name >  # in case we have multiple container running in a pod.
+kubectl top nodes   # Run git clone https://github.com/kodekloudhub/kubernetes-metrics-server.git and kubectl create -f .
+kubectl top pod
+kubectl get events
+kubectl drain <node name>        # Evict or delete pod running on mentioned node
+kubectl cordon < node name>      # Make the node unscheduled
+Kubectl uncordon < node name >   # Make the node schedule
+
+# Backup of objects and ETCD key-value store
+=============================================
+kubectl get all --all-namespaces -o yaml > backup-akk-object.yml
+ETCDCTL_API=3 etcdctl snapshot save snapshot.db
+ETCDCTL_API=3 etcdctl snapshot status snapshot.db
+
+
+ETCDCTL_API=3 etcdctl --cacert="/etc/kubernetes/pki/etcd/ca.crt" \
+ --cert="/etc/kubernetes/pki/etcd/server.crt" \
+ --key="/etc/kubernetes/pki/etcd/server.key" \
+ snapshot save /opt/snapshot-pre-boot.db
+
+ETCDCTL_API=3 etcdctl snapshot restore /opt/snapshot-pre-boot.db --data-dir /var/lib/etcd-from-backup
+
+# Change the data-dir in /etc/kubernetes/manifests/etcd.yml file
+
+
+
+
+
