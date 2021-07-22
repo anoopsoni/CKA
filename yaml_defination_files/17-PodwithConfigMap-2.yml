@@ -1,0 +1,14 @@
+apiVersion: vi
+kind: Pod
+metadata:
+  name: config-pod
+spec:
+  containers:
+    - name: nginx-pod
+      image: nginx
+      env:
+        - name: APP_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: APP_COLOR
