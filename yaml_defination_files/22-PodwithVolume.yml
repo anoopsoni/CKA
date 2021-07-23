@@ -16,3 +16,4 @@ spec:
       hostPath:
         path: /data
         type: Directory
+

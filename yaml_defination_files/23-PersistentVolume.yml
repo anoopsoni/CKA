@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-volume
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /tmp/data
+# In Production Scenario use nfs, glusterfs, awsElasticBlockStore etc
+#  nfs:
+#    server: 172.31.30.48
+#    # Exported path of your NFS server
+#    path: "/mnt/sharedfolder"
