@@ -66,9 +66,18 @@ ETCDCTL_API=3 etcdctl snapshot restore /opt/snapshot-pre-boot.db --data-dir /var
 # Change the data-dir in /etc/kubernetes/manifests/etcd.yml file
 
 #ConfigMap and Secrets
+=================================
 
 kubectl create configmap my-conf --from-literal=APP_COLOR=blue
 kubectl create configmap my-conf --from-file=<path to file>
+
+kubectl create secret generic my-secret --from-literal=DB_HOST=mysql
+kubectl create secret generic my-secret --from-file=secret.properties
+echo -n 'mysql' | base64                    # Encode the values for secret definition file
+echo -n "bxleWw=" | base64 --decode         # Decode the values
+kubectl get secret my-secret -o yaml        # in order to view the secret values
+
+
 
 
 
