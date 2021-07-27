@@ -10,6 +10,12 @@ kubectl get pods -l app=my-app        # To get the pods details for particular l
 kubectl describe pods < pod name >    # To get all information related to pod
 kubectl cluster-info
 kubectl delete pods < pod name>
+kubectl config view                   # view kubeconfig file
+kubectl config -h                     # Check option for kubeconfig
+kubectl auth can-i create pods        # To check the permissions to create the pods
+kubectl auth can-i create pods --as dev-user
+kubectl create clusterrolebinding pvviewer-role-binding --clusterrole=pvviewer-role --serviceaccount=default:pvviewer
+kubectl create clusterrole pvviewer-role --resource=persistentvolumes --verb=list
 
 
 # Deployment commands
@@ -76,6 +82,23 @@ kubectl create secret generic my-secret --from-file=secret.properties
 echo -n 'mysql' | base64                    # Encode the values for secret definition file
 echo -n "bxleWw=" | base64 --decode         # Decode the values
 kubectl get secret my-secret -o yaml        # in order to view the secret values
+
+# Certificate generation
+=======================================
+# Generate CA certificate
+
+openssl genrsa -out ca.key 2048                                      # Generate Key
+openssl req -new -key ca.key -subj "/CN=KUBERNETES-CA" -out ca.csr   # Certificate Signing request
+openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt             # Sign Certificate
+
+-----
+
+# Generate Client Certificate
+openssl genrsa -out admin.key 2048
+openssl req -new -key admin.key -subj "/CN=kube-admin" -out admin.csr
+openssl x509 -req -in admin.csr -CA ca.crt -CAKey ca.key -out admin.crt
+
+openssl x509 -in ca.crt -text -noout  # To view the certificate
 
 
 
