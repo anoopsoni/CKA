@@ -1,6 +1,6 @@
 # On master Node
 kubectl get nodes
-kubectl upgrade plan                              # It will show the current and available version
+kubeadm upgrade plan                              # It will show the current and available version
 apt-get upgrade -y kubeadm=1.21.3-00              # First upgrade the kubeadm version
 kubeadm upgrade apply v1.21.3                     # Upgrade other component
 apt-get upgrade -y kubelet=1.21.3-00              # Upgrade the kubelet version
